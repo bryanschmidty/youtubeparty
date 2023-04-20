@@ -1,0 +1,14 @@
+@layout('layouts/app')
+
+@set('title', 'Home')
+
+@section('content')
+  <h1>Join the Party!</h1>
+  <p>
+    @if(auth.isLoggedIn)
+      Click "Create Room" above
+    @else
+      Sign in
+    @endif
+    to host your own room, or join a room below!</p>
+@endsection

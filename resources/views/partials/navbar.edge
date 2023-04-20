@@ -1,0 +1,28 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">My App</a>
+
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mr-auto"></ul>
+    <ul class="navbar-nav">
+      @auth
+      <!-- Show the user's avatar and a dropdown menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="{{ auth.user.avatar }}" width="32" height="32" class="rounded-circle me-2">
+          {{ auth.user.name }}
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item" href="#">Profile</a></li>
+          <li><a class="dropdown-item" href="#">Settings</a></li>
+          <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
+        </ul>
+      </li>
+      @else
+      <!-- Show a Login button -->
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('login') }}">Login</a>
+      </li>
+      @endauth
+    </ul>
+  </div>
+</nav>

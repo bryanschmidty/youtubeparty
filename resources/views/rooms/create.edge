@@ -1,0 +1,70 @@
+@layout('layouts/app')
+
+@set('title', 'Home')
+
+@section('content')
+  <div class="container">
+    <h1 class="mb-4">Create a Room</h1>
+
+    @if(flashMessages.has('errors'))
+    <div class="alert alert-danger">
+      <ul>
+        @each(error in flashMessages.get('errors'))
+          <li>{{ error }}</li>
+        @end
+      </ul>
+    </div>
+    @endif
+
+    <form method="POST" action="/rooms/create">
+      <div class="mb-3">
+        <label for="name" class="form-label">Room Name</label>
+        <input
+          type="text"
+          class="form-control {{ flashMessages.has('errors.name') ? 'is-invalid' : '' }}"
+          id="name"
+          name="name"
+          required
+        />
+        @if(flashMessages.has('errors.name'))
+        <div class="invalid-feedback">{{ flashMessages.get('errors.name') }}</div>
+        @endif
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label">Room Description</label>
+        <input
+          type="text"
+          class="form-control {{ flashMessages.has('errors.description') ? 'is-invalid' : '' }}"
+          id="description"
+          name="description"
+        />
+        @if(flashMessages.has('errors.description'))
+          <div class="invalid-feedback">{{ flashMessages.get('errors.description') }}</div>
+        @endif
+      </div>
+
+      <div class="mb-3">
+        <label for="private" class="form-check-label">Private Room</label>
+        <input
+          type="checkbox"
+          class="form-check-input"
+          id="private"
+          name="private"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="anonymous" class="form-check-label">Anonymous</label>
+        <input
+          type="checkbox"
+          class="form-check-input"
+          id="anonymous"
+          name="anonymous"
+        />
+      </div>
+
+      <button type="submit" class="btn btn-primary">Create Room</button>
+    </form>
+  </div>
+@endsection
