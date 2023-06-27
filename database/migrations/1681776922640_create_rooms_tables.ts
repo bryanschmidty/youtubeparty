@@ -6,13 +6,14 @@ export default class extends BaseSchema {
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.uuid('id').primary()
-      table.integer('user_id').unsigned().references('id').inTable('users')
+      table.integer('user_id').unsigned().references('users.id').onDelete('CASCADE')
       table.string('name').notNullable()
       table.string('description')
       table.boolean('private').defaultTo(false)
       table.boolean('anonymous').defaultTo(false)
       table.string('invite_code')
-      table.timestamps()
+      table.timestamps(true)
+      table.dateTime("deleted_at").defaultTo(null);
     })
   }
 

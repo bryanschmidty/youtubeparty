@@ -3,12 +3,29 @@
 @set('title', 'Home')
 
 @section('content')
-  <h1>Join the Party!</h1>
-  <p>
-    @if(auth.isLoggedIn)
-      Click "Create Room" above
-    @else
-      Sign in
-    @endif
-    to host your own room, or join a room below!</p>
+  <div class="h-screen flex flex-col justify-around items-center text-white font-sans">
+    <div class="flex flex-col items-center">
+      <h1 class="text-9xl font-bold mb-4">Join the Party!</h1>
+      <p class="text-4xl">
+        @if(auth.isLoggedIn)
+          Click "Create Room" above
+        @else
+          Sign in
+        @endif
+        to host your own room, or join a room below!
+      </p>
+    </div>
+
+    <div class="w-full p-4 flex flex-wrap items-start justify-center">
+      @each(room in rooms)
+        <div class="w-1/3 px-2 py-5">
+          <div class="w-full p-2 bg-gray-200 bg-opacity-40 text-black cursor-pointer transform ease-in-out duration-200 hover:scale-105" onClick="console.log('{{ room.id }}')">
+            <h1>{{ room.name }}</h1>
+            <p>{{ room.description }}</p>
+          </div>
+        </div>
+      @end
+    </div>
+  </div>
+
 @endsection

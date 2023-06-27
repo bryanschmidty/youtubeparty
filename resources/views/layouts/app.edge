@@ -3,197 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ title }}</title>
-  <!-- Include the CSS and JS files needed for your application -->
-  <style>
-    body {
-      background: linear-gradient(-45deg, #803e2a, #812045, #145b75, #158168);
-      background-size: 400% 400%;
-      animation: gradient 15s ease infinite;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    h1 {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 5rem;
-      color: white;
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    p {
-      font-family: 'Roboto', sans-serif;
-      font-size: 2rem;
-      color: white;
-      text-align: center;
-    }
-
-    @keyframes gradient {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
-    }
-
-
-
-    /* Style the navbar */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 50px;
-      background-color: #333;
-      color: #fff;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    /* Style the logo */
-    .logo {
-      font-family: sans-serif;
-      margin-left: 10px;
-      font-size: 2em;
-    }
-
-    .create-room {
-      margin-right: 10px;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 0.5em 1em;
-      border: none;
-      border-radius: 0.25em;
-      font-weight: bold;
-      text-decoration: none;
-      text-align: center;
-      cursor: pointer;
-    }
-
-    .btn-yellow {
-      background-color: yellow;
-      color: black;
-    }
-
-    .nav-link, .user-name {
-      color: white;
-      text-decoration: none;
-      text-transform: uppercase;
-      font-family: sans-serif;
-    }
-
-    /* Style the user info */
-    .nav-group {
-      position: relative;
-      display: flex;
-      align-items: center;
-      margin-right: 10px;
-    }
-
-    /* Style the user avatar */
-    .user-avatar {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      overflow: hidden;
-      margin-right: 10px;
-    }
-
-    .user-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* Style the user name */
-    .user-name {
-      margin-right: 10px;
-    }
-
-    /* Style the user menu */
-    .user-menu {
-      position: absolute;
-      top: 100%;
-      right: 0;
-      width: 150px;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-      display: none;
-    }
-
-    .user-menu ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-
-    .user-menu li {
-      padding: 10px;
-    }
-
-    .user-menu li hr {
-      border: none;
-      border-top: 1px solid #ccc;
-      margin: 5px 0;
-    }
-
-    /* Show the user menu on hover */
-    .user-info:hover .user-menu {
-      display: block;
-    }
-
-    .content {
-      margin-top: 50px; /* Set the margin-top to be equal to the height of the navbar */
-    }
-
-  </style>
+  <title>{{ title }}</title>  <!-- Include the CSS and JS files needed for your application -->
 
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  @entryPointStyles('app')
 </head>
 <body>
-  <nav>
-    <div class="logo">YouTube Party</div>
-    @if(auth.isLoggedIn)
-      <div class="nav-group">
-        <div class="create-room">
-          <a href="/rooms/create" class="btn btn-yellow">Create Room</a>
-        </div>
-        <div class="user-info">
-          <div class="user-avatar">
-            <img src="{{ auth.user.avatar }}">
-          </div>
-          <div class="user-name">{{ auth.user.name }}</div>
-          <div class="user-menu">
-            <ul>
-              <li><a href="#">Profile</a></li>
-              <li><a href="#">Settings</a></li>
-              <li><hr></li>
-              <li><a href="{{ route('AuthController.logout') }}">Logout</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    @else
-      <div class="nav-group">
-        <a class="nav-link" href="{{ route('AuthController.redirectToGoogle') }}">Login</a>
-      </div>
-    @endif
-  </nav>
+  <nav class="sticky top-0 z-10 bg-gray-800">
 
+    <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+      <div class="relative flex items-center justify-between h-16">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <h1 class="bg-red-700 text-white font-bold text-3xl rounded px-3 py-1 font-sans"><a href="/">YouTubeParty</a></h1>
+          </div>
+        </div>
+        <div class="hidden md:flex items-center space-x-4">
+          @if(auth.isLoggedIn)
+            <a href="{{ route('create-room') }}" class="bg-yellow-500 text-black font-medium py-2 px-4 rounded mr-4 hover:bg-yellow-600">Create Room</a>
+            <div class="relative group">
+              <div class="flex items-center space-x-2 cursor-pointer">
+                <img class="h-8 w-8 rounded-full" src="{{ auth.user.avatar }}" alt="User avatar">
+                <span class="text-gray-300 text-sm font-medium">{{ auth.user.name }}</span>
+              </div>
+              <div class="absolute left-0 top-full w-44 bg-white text-black rounded-lg shadow-lg py-2 invisible group-hover:visible">
+                <a href="#" class="block px-4 py-2 text-sm font-medium hover:bg-gray-200">Profile</a>
+                <a href="#" class="block px-4 py-2 text-sm font-medium hover:bg-gray-200">Settings</a>
+                <div class="border-t"></div>
+                <a href="{{ route('logout') }}" class="block px-4 py-2 text-sm font-medium hover:bg-gray-200">Logout</a>
+              </div>
+            </div>
+          @else
+            <a href="{{ route('login') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Login</a>
+          @endif
+        </div>
+      </div>
+    </div>
+  </nav>
+  @if (flashMessages.has('auth.error'))
+    <div id="flash-message" class="opacity-100 transition-opacity duration-1000 ease-in-out fixed inset-x-0 top-16 bg-red-500 text-white text-center py-2 font-bold">
+      unauthorized action
+    </div>
+    <script>
+      const flashDiv = document.getElementById('flash-message');
+      setTimeout(function () {
+        flashDiv.classList.add('opacity-0');
+      }, 1000);
+      setTimeout(function() {
+        flashDiv.remove();
+      }, 2000);
+    </script>
+  @endif
 
   <!-- Display the main content of the page -->
   <div class="content">
@@ -206,11 +67,6 @@
     socket.on('server-news', (data) => {
       console.log(data)
     })
-
-    @if(auth.isLoggedIn)
-      console.log({{ auth.user.googleId }})
-      socket.emit('user-login', {{ auth.user.googleId }})
-    @endif
   </script>
 </body>
 </html>

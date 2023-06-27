@@ -35,8 +35,7 @@ export default class AuthController {
           await user.save()
       }
       await auth.login(user)
-      Ws.io.emit('news', { 'logged in': user.name })
-      Ws.io.emit('my other event', { 'logged in': user.name })
+      Ws.io.emit('server-news', { 'logged in': user.name })
       return response.redirect('/')
     } else {
         return response.status(401).send('Unauthorized')

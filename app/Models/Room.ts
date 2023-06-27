@@ -25,11 +25,14 @@ export default class Room extends BaseModel {
   @column()
   public inviteCode: string
 
-  @column.date({ autoCreate: true, autoUpdate: true })
+  @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
-  @column.date({ autoCreate: true, autoUpdate: true })
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @column.dateTime({ serializeAs: null})
+  public deletedAt: DateTime
 
   @belongsTo(() => User)
   public host: BelongsTo<typeof User>
